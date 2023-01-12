@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  realtor_db:
+    image: postgres:14.3
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pgadmin
+      POSTGRES_DB: realtor_db
+    volumes:
+      - realtordb_vol:/var/lib/postgresql/data
+    networks:
+      - realtor_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - realtor_db
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    volumes:
+      - realtorpg_vol:/var/lib/pgadmin
+    networks:
+      - realtor_net
+
+volumes:
+  realtordb_vol:
+  realtorpg_vol:
+
+networks:
+  realtor_net:
