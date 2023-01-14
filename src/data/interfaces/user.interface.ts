@@ -1,5 +1,8 @@
-export interface ICreateUser {
+import { UserType } from '@prisma/client';
+
+export interface ISignupResponse {
   id: number;
   email: string;
-  password: string;
+  phone: string;
+  user_type: UserType;
 }

@@ -40,7 +40,7 @@ model Home {
   images              Image[]
   messages            Message[]
   realtor_id          Int
-  realtor             User         @relation(fields: [realtor_id], references: [id])
+  realtor             User         @relation(fields: [realtor_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Image {
@@ -49,20 +49,20 @@ model Image {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   home_id    Int
-  home       Home     @relation(fields: [home_id], references: [id])
+  home       Home     @relation(fields: [home_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Message {
   id         Int    @id @default(autoincrement())
   message    String
   home_id    Int
-  home       Home   @relation(fields: [home_id], references: [id])
+  home       Home   @relation(fields: [home_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   realtor_id Int
-  realtor    User   @relation("buyer_messages", fields: [realtor_id], references: [id])
+  realtor    User   @relation("buyer_messages", fields: [realtor_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   buyer_id   Int
-  buyer      User   @relation("realtor_messages", fields: [buyer_id], references: [id])
+  buyer      User   @relation("realtor_messages", fields: [buyer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int?
-  User       User?  @relation(fields: [userId], references: [id])
+  User       User?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum UserType {
