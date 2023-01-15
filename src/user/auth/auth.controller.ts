@@ -19,6 +19,11 @@ import * as bcrypt from 'bcryptjs';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  /*************************************************************************
+   * @Describtion     Register A New Member
+   * @Route           POST /auth/signup/:userType
+   * @Access          Public
+   */
   @Post('/signup/:userType')
   async signup(
     @Body() body: SignupDTO,
@@ -41,14 +46,24 @@ export class AuthController {
       }
     }
 
-    return await this.authService.signup(body);
+    return await this.authService.signup(body, userType);
   }
 
+  /*************************************************************************
+   * @Describtion     Login
+   * @Route           POST /auth/signin
+   * @Access          Public
+   */
   @Post('/signin')
   async signin(@Body() body: SigninDTO) {
     return await this.authService.signin(body);
   }
 
+  /*************************************************************************
+   * @Describtion     Get The Product Key
+   * @Route           GET /auth/key
+   * @Access          Public
+   */
   @Post('/key')
   async generateProductKey(@Body() { email, userType }: GenerateProductKeyDTO) {
     return await this.authService.generateProductKey(email, userType);

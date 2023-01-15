@@ -1,5 +1,4 @@
 import { ConflictException, HttpException, Injectable } from '@nestjs/common';
-import { SignupDTO } from 'src/user/dto/auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
@@ -24,7 +23,7 @@ export class AuthService {
   /***************************************************
    *                 SIGN UP
    **************************************************/
-  async signup(body: ISignupParams) {
+  async signup(body: ISignupParams, userType: UserType) {
     const { email, password, name, phone } = body;
 
     const userExists = await this.prismaService.user.findUnique({
@@ -43,7 +42,7 @@ export class AuthService {
         email,
         phone,
         password: hashedPwd,
-        user_type: UserType.BUYER,
+        user_type: userType,
       },
     });
 
